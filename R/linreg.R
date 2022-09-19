@@ -31,7 +31,9 @@
 #' 
 
 linreg <- setRefClass("linreg", 
-                      fields = list(coefficients = "matrix", 
+                      fields = list(regdata = "character",
+                                    regformula = "character",
+                                    coefficients = "matrix", 
                                     fittedvalues = "matrix", 
                                     residuals = "matrix", 
                                     degrees = "numeric", 
@@ -51,11 +53,13 @@ linreg$methods(
     # First, we must establish our model matrix, our dependent variable, values
     # for n and p, and our y matrix to do our calculations:
     
-    xmatrix <- model.matrix(formula, data)  # our model matrix
-    y <- all.vars(formula)[1]               # y, our dependent variable
-    n <- nrow(data)                         # n, or number of observations
-    p <- length(all.vars(formula))          # p, or number of parameters
-    ymatrix <- matrix(data[, y])            # matrix with the values of y
+    .self$regdata <- deparse(substitute(data))  # our data name
+    .self$regformula <- format(formula)         # our formula name
+    xmatrix <- model.matrix(formula, data)      # our model matrix
+    y <- all.vars(formula)[1]                   # y, our dependent variable
+    n <- nrow(data)                             # n, or number of observations
+    p <- length(all.vars(formula))              # p, or number of parameters
+    ymatrix <- matrix(data[, y])                # matrix with the values of y
     
     
     # Next, we use these values to calculate the regression coefficients,
@@ -105,7 +109,9 @@ linreg$methods(
     # Finally, we place our summary statistics in a matrix so that we can
     # easily print it in the summary() method:
     
-    .self$sumstats <- cbind(coefficients, sqrt(coeffvariance), tvalues, pvalues)
+    .self$sumstats <- round(cbind(coefficients, sqrt(coeffvariance), 
+                                  tvalues, pvalues), 2)
+    
     colnames(sumstats) <<- c("Estimate", "Std. Error", "T Value", "P Value")
   },
   
@@ -114,8 +120,10 @@ linreg$methods(
     
     "Prints the coefficient estimates for the regression."
     
-    cat("Coefficients:", "\n")
-    t(testreg$coefficients)[1,]
+    cat("linreg(formula = ", regformula, ", ", "data = ", regdata, ")",
+        sep = "")
+    cat("\n", "\n", rownames(coefficients))
+    cat("\n", as.vector(coefficients))
   },
   
   
@@ -149,9 +157,26 @@ linreg$methods(
     and degrees of freedom."
     
     cat("Coefficients:", "\n")
-    methods::show(sumstats)
-    cat("---", "\n", "Residual Standard Error:", sqrt(residvariance), "on",
-        degrees, "degrees of freedom")
+    
+    for(i in 1:nrow(sumstats)){
+      stars = NA
+      if (sumstats[i,4] < 0.001){
+        stars = "***"
+      } else if (sumstats[i,4] < 0.01){
+        stars = "**"
+      } else if (sumstats[i,4] < 0.05){
+        stars = "*"
+      } else if (sumstats[i,4] < 0.1){
+        stars = "."
+      } else {
+        stars = " "
+      }
+      
+      cat(rownames(sumstats)[i], sumstats[i,1], sumstats[i,2], sumstats[i,3],
+          sumstats[i,4], stars, "\n", sep = " ")
+    }
+    
+    cat("---", "\n", "Residual standard error:", round(sqrt(residvariance), 2), 
+        "on", degrees, "degrees of freedom")
   }
 )
-
