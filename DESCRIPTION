@@ -1,5 +1,5 @@
 Package: linearRegression
-Title: Linear Regression Model in R.
+Title: Linear Regression Model in R
 Version: 0.0.0.9000
 Authors@R: 
     person("Sachini", "Bambaranda", , "bamba063@student.liu.se", 
