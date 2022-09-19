@@ -62,11 +62,11 @@ examplelinreg$coefficients
 # Coefficient estimates for each independent variable. A matrix with one column 
 # and p+1 rows.
 
-examplelinreg$fittedvalues 
+examplelinreg$fittedvalues
 # Fitted values of dependent variable for each observation. A matrix with one 
 # column and n rows.
 
-examplelinreg$residuals 
+examplelinreg$residuals
 # Residual values for the dependent variable for each observation. A matrix 
 # with one column and n rows.
 
@@ -153,4 +153,11 @@ examplelinreg$summary()
 
 ### plot()
 
-The plot() method
+The plot() method displays two plots. The first is a scatter plot with fitted
+values on the x axis and the residuals on the y axis. The second is a similar
+plot, except the y axis on this one shows the square root of the absolute value
+of the standardized residuals.
+
+```{r}
+# examplelinreg$plot()
+```
