@@ -46,8 +46,8 @@ and p+1 rows.}
 \describe{
 \item{\code{coef()}}{Shows the coefficient estimates as a named vector.}
 
-\item{\code{initialize(formula, data)}}{Creates the object, executes the regression calculations, and saves the 
-values under the respective fields.}
+\item{\code{initialize(formula, data)}}{Creates the object, executes the regression calculations based on formula
+and data, and saves the values under the respective fields of the object.}
 
 \item{\code{pred()}}{Shows the fitted/predicted values for each observation in the data set.}
 

@@ -39,8 +39,8 @@ linreg$methods(
   
   initialize = function(formula, data){
     
-    "Creates the object, executes the regression calculations, and saves the 
-    values under the respective fields."
+    "Creates the object, executes the regression calculations based on formula
+    and data, and saves the values under the respective fields of the object."
     
     # First, we must establish our model matrix, our dependent variable, values
     # for n and p, and our y matrix to do our calculations:
