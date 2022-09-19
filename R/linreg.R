@@ -23,6 +23,12 @@
 #' standard errors, t-values, and p-values). A matrix with with four columns
 #' and p+1 rows.
 #' 
+#' @return An object of class "linreg".
+#' 
+#' @export linreg
+#' @exportClass linreg
+#' @importFrom methods new setRefClass
+#' 
 
 linreg <- setRefClass("linreg", 
                       fields = list(coefficients = "matrix", 

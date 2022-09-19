@@ -5,6 +5,9 @@
 \alias{linreg-class}
 \alias{linreg}
 \title{linreg}
+\value{
+An object of class "linreg".
+}
 \description{
 A Reference Class that creates a linear regression based on a given
 formula with p independent variables and a given data set with n
