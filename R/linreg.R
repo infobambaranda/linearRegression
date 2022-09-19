@@ -1,8 +1,27 @@
 #' linreg
 #' 
 #' A Reference Class that creates a linear regression based on a given
-#' formula and data set and allows users to view plots and data summaries based
-#' on that regression.
+#' formula with p independent variables and a given data set with n 
+#' observations. Allows users to view plots and data summaries based on this 
+#' regression.
+#' 
+#' @field coefficients Coefficient estimates for each independent variable. A
+#' matrix with one column and p+1 rows.
+#' @field fittedvalues Fitted values of dependent variable for each observation.
+#' A matrix with one column and n rows.
+#' @field residuals Residual values for dependent variable for each observation.
+#' A matrix with one column and n rows.
+#' @field degrees Degrees of Freedom. A length-one numeric vector.
+#' @field residvariance Residual Variance. A length-one numeric vector.
+#' @field coeffvariance Coefficient Variance for each independent variable. A 
+#' matrix with one column and p+1 rows.
+#' @field tvalues T-values for each coefficient estimate. A matrix with one 
+#' column and p+1 rows.
+#' @field pvalues P-values for each coefficient estimate. A matrix with one 
+#' column and p+1 rows.
+#' @field sumstats Summary statistics for the regression (coefficient estimates,
+#' standard errors, t-values, and p-values). A matrix with with four columns
+#' and p+1 rows.
 #' 
 
 linreg <- setRefClass("linreg", 
@@ -19,6 +38,9 @@ linreg <- setRefClass("linreg",
 linreg$methods(
   
   initialize = function(formula, data){
+    
+    "Creates the object, executes the regression calculations, and saves the 
+    values under the respective fields."
     
     # First, we must establish our model matrix, our dependent variable, values
     # for n and p, and our y matrix to do our calculations:
@@ -83,26 +105,43 @@ linreg$methods(
   
   
   print = function(){
+    
+    "Prints the coefficient estimates for the regression."
+    
     cat("Coefficients:", "\n")
     t(testreg$coefficients)[1,]
   },
   
   
   resid = function(){
+    
+    "Shows the residual values for each observation in the data set."
+    
     residuals
   },
   
   pred = function(){
+    
+    "Shows the fitted/predicted values for each observation in the data set."
+    
     fittedvalues
   },
   
   coef = function(){
+    
+    "Shows the coefficient estimates as a named vector."
+    
     coefvector <- as.vector(coefficients)
     names(coefvector) <- rownames(coefficients)
     coefvector
   },
   
   summary = function(){
+    
+    "Shows the summary statistics for the regression, including the coefficient
+    estimates, standard errors, t-values, p-values, residual standard error, 
+    and degrees of freedom."
+    
     cat("Coefficients:", "\n")
     methods::show(sumstats)
     cat("---", "\n", "Residual Standard Error:", sqrt(residvariance), "on",
@@ -110,10 +149,3 @@ linreg$methods(
   }
 )
 
-testreg = linreg$new(Sepal.Length ~ Sepal.Width + Petal.Length, iris)
-
-testreg$print()
-testreg$resid()
-testreg$pred()
-testreg$coef()
-testreg$summary()
