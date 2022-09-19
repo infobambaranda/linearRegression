@@ -17,6 +17,11 @@ regression.
 \section{Fields}{
 
 \describe{
+\item{\code{regdata}}{The name of the data set being used. A character string.}
+
+\item{\code{regformula}}{The formula being used for the regression. A character
+string.}
+
 \item{\code{coefficients}}{Coefficient estimates for each independent variable. A
 matrix with one column and p+1 rows.}
 

@@ -5,6 +5,9 @@
 #' observations. Allows users to view plots and data summaries based on this 
 #' regression.
 #' 
+#' @field regdata The name of the data set being used. A character string.
+#' @field regformula The formula being used for the regression. A character
+#' string.
 #' @field coefficients Coefficient estimates for each independent variable. A
 #' matrix with one column and p+1 rows.
 #' @field fittedvalues Fitted values of dependent variable for each observation.
