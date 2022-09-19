@@ -64,6 +64,14 @@ linreg$methods(
     p <- length(all.vars(formula))              # p, or number of parameters
     ymatrix <- matrix(data[, y])                # matrix with the values of y
     
+    for (i in 2:length(all.vars(formula))){
+      string = all.vars(formula)[i]
+      
+      if (is(data[1, string], "factor")){
+        adds = length(unique(data[, string])) - 2
+        p = p + adds
+      }
+    }
     
     # Next, we use these values to calculate the regression coefficients,
     # fitted values, residuals, degrees of freedom, residual variance,
@@ -93,12 +101,12 @@ linreg$methods(
     bhatvarmatrix <- residvariance * solve((t(xmatrix) %*% xmatrix))
     
     bhatvarvector <- c()
-    for(i in 1:length(all.vars(formula))){
+    for(i in 1:p){
       bhatvarvector <- append(bhatvarvector, bhatvarmatrix[i,i])
     }
     
     .self$coeffvariance <- matrix(bhatvarvector, 
-                                  nrow = length(all.vars(formula)))
+                                  nrow = p)
     rownames(coeffvariance) <<- rownames(bhatvarmatrix)
     
     # This format allows us to easily create a matrix of the standard errors

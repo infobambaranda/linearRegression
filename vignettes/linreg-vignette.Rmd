@@ -96,7 +96,7 @@ examplelinreg$sumstats
 ## Methods
 
 As with any RC object, objects of class *linreg* have a set of functions (known
-as *methods*) that apply only to them and can be called using the $ sytax as
+as *methods*) that apply only to them and can be called using the $ syntax as
 shown above. In particular, there are six main methods that can be called: 
 print(), pred(), resid(), coef(), summary(), and plot(). Here, we will explain 
 what each method does and how to use them:
