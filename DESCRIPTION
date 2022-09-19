@@ -1,12 +1,13 @@
 Package: linearRegression
-Title: Linear Regression model in R.
+Title: Linear Regression Model in R.
 Version: 0.0.0.9000
 Authors@R: 
     person("Sachini", "Bambaranda", , "bamba063@student.liu.se", 
            role = c("aut", "cre"))
     person("Connor", "Turner", , "contu434@student.liu.se", 
            role = c("aut", "cre"))
-Description: A package that allows users users to handle linear regression models.Ther are two versions. The first version is  built using ordinary linear algebra and the second version is built using QR decomposition.
+Description: A package that allows users to generate linear regression 
+  models in R and create plots and summaries of the data. 
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
