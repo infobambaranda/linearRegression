@@ -139,20 +139,25 @@ linreg$methods(
   },
   
   plot = function(){
-    "Shows 2 plots Residuals vs Fitted and Scale - Location"
+    
+    "Shows 2 plots based on the regression: Residuals vs Fitted Values and 
+    Scale - Location"
+    
     median <- median(residuals)
-    g_plot_rvf <- ggplot2::ggplot(mapping = aes(x = fittedvalues, y = residuals)) + 
+    g_plot_rvf <- 
+      ggplot2::ggplot(mapping = aes(x = fittedvalues, y = residuals)) + 
       ggplot2::geom_point(shape = 1, size = 3)+ 
       ggplot2::stat_summary(fun="median", colour="red", geom="line")+
-      ggplot2::labs(title="Residuals vs Fitted")
+      ggplot2::labs(title = "Residuals vs Fitted")
     
     s_res <- sqrt(abs(residuals/(sqrt(residvariance))))
-    g_plot_srvf <- ggplot2::ggplot(mapping = aes(x = fittedvalues, y = s_res))+ 
+    g_plot_srvf <- 
+      ggplot2::ggplot(mapping = aes(x = fittedvalues, y = s_res))+ 
       ggplot2::geom_point(shape = 1, size = 3) + 
-      ggplot2::stat_summary(fun="mean", colour="red", geom="line")+
-      ggplot2::labs(title="Scale - Location")
+      ggplot2::stat_summary(fun = "mean", colour="red", geom="line")+
+      ggplot2::labs(title = "Scale - Location")
     
-    plots <- list(g_plot_rvf,g_plot_srvf)
+    plots <- list(g_plot_rvf, g_plot_srvf)
     plots
     
   },

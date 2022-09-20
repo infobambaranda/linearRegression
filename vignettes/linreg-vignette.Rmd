@@ -159,5 +159,6 @@ plot, except the y axis on this one shows the square root of the absolute value
 of the standardized residuals.
 
 ```{r}
-# examplelinreg$plot()
+examplelinreg2 <- linreg(Petal.Length ~ Species, data = iris)
+examplelinreg2$plot()
 ```

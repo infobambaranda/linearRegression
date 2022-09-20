@@ -57,7 +57,8 @@ and p+1 rows.}
 \item{\code{initialize(formula, data)}}{Creates the object, executes the regression calculations based on formula
 and data, and saves the values under the respective fields of the object.}
 
-\item{\code{plot()}}{Shows 2 plots Residuals vs Fitted and Scale - Location}
+\item{\code{plot()}}{Shows 2 plots based on the regression: Residuals vs Fitted Values and 
+Scale - Location}
 
 \item{\code{pred()}}{Shows the fitted/predicted values for each observation in the data set.}
 
