@@ -30,8 +30,9 @@
 #' 
 #' @export linreg
 #' @exportClass linreg
-#' @importFrom methods new setRefClass
-#' 
+#' @importFrom methods new setRefClass 
+#' @import ggplot2
+
 
 linreg <- setRefClass("linreg", 
                       fields = list(regdata = "character",
@@ -137,6 +138,24 @@ linreg$methods(
     cat("\n", as.vector(coefficients))
   },
   
+  plot = function(){
+    "Shows 2 plots Residuals vs Fitted and Scale - Location"
+    median <- median(residuals)
+    g_plot_rvf <- ggplot2::ggplot(mapping = aes(x = fittedvalues, y = residuals)) + 
+      ggplot2::geom_point(shape = 1, size = 3)+ 
+      ggplot2::stat_summary(fun="median", colour="red", geom="line")+
+      ggplot2::labs(title="Residuals vs Fitted")
+    
+    s_res <- sqrt(abs(residuals/(sqrt(residvariance))))
+    g_plot_srvf <- ggplot2::ggplot(mapping = aes(x = fittedvalues, y = s_res))+ 
+      ggplot2::geom_point(shape = 1, size = 3) + 
+      ggplot2::stat_summary(fun="mean", colour="red", geom="line")+
+      ggplot2::labs(title="Scale - Location")
+    
+    plots <- list(g_plot_rvf,g_plot_srvf)
+    plots
+    
+  },
   
   resid = function(){
     
