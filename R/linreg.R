@@ -143,19 +143,65 @@ linreg$methods(
     "Shows 2 plots based on the regression: Residuals vs Fitted Values and 
     Scale - Location"
     
+    theme_liu <- function(){
+      
+      ggplot2::theme_minimal() %+replace%
+        
+        ggplot2::theme(panel.border = element_rect(colour = "Light Grey",
+                                                   fill = NA),
+                       plot.margin = margin(30, 30, 20, 20),
+                       plot.title = element_text(size = 18,
+                                                 margin = margin(0,0,5,0),
+                                                 vjust = 3,
+                                                 hjust = 0),
+                       plot.subtitle = element_text(size = 12,
+                                                    vjust = 4,
+                                                    margin = margin(5,0,5,0),
+                                                    hjust = 0),
+                       axis.title.x = element_text(size = 12),
+                       axis.title.y = element_text(size = 12,
+                                                   angle = 90),
+                       axis.text.x = element_text(size = 10,
+                                                  margin = margin(5,0,10,0),
+                                                  colour = "black"),
+                       axis.text.y = element_text(size = 10,
+                                                  hjust = 1,
+                                                  margin = margin(0,5,0,10),
+                                                  colour = "black"),
+                       axis.ticks = element_line(colour = "light grey"),
+                       axis.ticks.length = unit(10, "pt"))
+    }
+    
     median <- median(residuals)
     g_plot_rvf <- 
       ggplot2::ggplot(mapping = aes(x = fittedvalues, y = residuals)) + 
-      ggplot2::geom_point(shape = 1, size = 3)+ 
-      ggplot2::stat_summary(fun="median", colour="red", geom="line")+
-      ggplot2::labs(title = "Residuals vs Fitted")
+      ggplot2::geom_point(size = 2, colour = "red") + 
+      ggplot2::stat_summary(fun = "median", colour = "red", geom = "line") + 
+      ggplot2::scale_x_continuous(limits = c(min(fittedvalues - 1),
+                                             max(fittedvalues + 1))) + 
+      ggplot2::scale_y_continuous(limits = c(min(residuals - sd(residuals)),
+                                             max(residuals + sd(residuals)))) + 
+      ggplot2::labs(title = "Residuals vs. Fitted Values", 
+                    subtitle = paste("Regression:", regformula), 
+                    x = "Fitted Values", 
+                    y = "Residuals") + 
+      theme_liu()
+      
     
     s_res <- sqrt(abs(residuals/(sqrt(residvariance))))
     g_plot_srvf <- 
-      ggplot2::ggplot(mapping = aes(x = fittedvalues, y = s_res))+ 
-      ggplot2::geom_point(shape = 1, size = 3) + 
-      ggplot2::stat_summary(fun = "mean", colour="red", geom="line")+
-      ggplot2::labs(title = "Scale - Location")
+      ggplot2::ggplot(mapping = aes(x = fittedvalues, y = s_res)) +  
+      ggplot2::geom_point(size = 2, colour = "red") + 
+      ggplot2::stat_summary(fun = "mean", colour = "red", geom = "line") + 
+      ggplot2::scale_x_continuous(limits = c(min(fittedvalues - sd(s_res)),
+                                             max(fittedvalues + sd(s_res)))) + 
+      ggplot2::scale_y_continuous(limits = c(min(s_res - .2),
+                                             max(s_res + .2))) + 
+      ggplot2::labs(title = "Scale - Location", 
+                    subtitle = paste("Regression:", regformula), 
+                    x = "Fitted Values", 
+                    y = expression(sqrt(abs("Standardized Residuals")))) + 
+      theme_liu()
     
     plots <- list(g_plot_rvf, g_plot_srvf)
     plots
@@ -215,3 +261,4 @@ linreg$methods(
         "on", degrees, "degrees of freedom")
   }
 )
+
